@@ -10,7 +10,7 @@ gitクライアントを入れた状態で、任意のディレクトリ（こ�
 gitdir=~/git
 myname="[半角自分の名前]"
 mymailaddress="[自分のメールアドレス]"
-clonehost=https://${host}/root/vmji.git
+clonehost=https://github.com/yakushijin/VMJI.git
 
 ```
 - git設定、ダウンロード
@@ -23,7 +23,7 @@ git config --global user.name $myname
 git config --global http.sslVerify false
 git config --global core.autocrlf false
 git clone $clonehost
-cd vmji
+cd VMJI
 ```
 - ドキュメント関連ディレクトリ  
 doc  
