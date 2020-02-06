@@ -1,0 +1,31 @@
+@keyframes RightToLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.Notice{
+	z-index: 999;
+	position: fixed;
+	top: 90%;
+	left: 75%;	
+	animation-duration: 3s;
+	animation-name: RightToLeft;
+	animation-iteration-count: 1.0;
+	width:30%;
+	height:40px;
+	float:right;
+	color: #0000a0;
+	text-align: left;
+    border-radius: 3px;
+    border-left : solid 2px #ceffce ;
+
+	background: -webkit-linear-gradient(to right, #eeffb9, transparent);
+	background: linear-gradient(to right, #eeffb9, transparent);
+	font-size: 1.5em;
+}

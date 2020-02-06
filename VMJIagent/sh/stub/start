@@ -1,0 +1,1 @@
+sed -i -e "/${1}/s/シャットオフ/実行中/gi" virshlist.txt

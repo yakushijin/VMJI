@@ -1,0 +1,1 @@
+sed -i -e "/${1}/s/実行中/シャットオフ/gi" /opt/vmoperation/virshlist.txt

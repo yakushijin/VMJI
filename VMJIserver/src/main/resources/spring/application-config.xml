@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+	<context:property-placeholder location="classpath:spring/bean.properties" /> 
+	
+	<context:annotation-config />
+	<context:component-scan base-package="mainPackage" />
+	
+<!-- DB関連start ========================================== -->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="${jdbc.driverClassName}"/>
+      <property name="url" value="${jdbc.url}" />
+      <property name="username" value="${jdbc.username}" />
+      <property name="password" value="${jdbc.password}" />
+	</bean>
+   
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter"> 
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="${jdbc.type}" />
+			</bean>
+		</property>
+	</bean>
+	
+	<jpa:repositories base-package="mainPackage.JpaRepository" />
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+<!-- DB関連end ========================================== -->
+
+<!-- DI関連start ========================================== -->
+	<!-- コントローラクラスDI -->
+	<bean id="authSuccessHandler" class="mainPackage.AuthSuccessHandler">
+		<property name="userDao" ref="userDao" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="defaultRedirectStrategy" ref="defaultRedirectStrategy" />
+	</bean>		
+	<bean id="userController" class="mainPackage.controller.UserController">
+		<property name="userDao" ref="userDao" />
+		<property name="guestOsLogic" ref="guestOsLogic" />
+		<property name="permission" ref="permission" />
+	</bean>	
+	<bean id="userList" class="mainPackage.controller.UserList">
+		<property name="userDao" ref="userDao" />
+		<property name="userLogic" ref="userLogic" />
+		<property name="permission" ref="permission" />
+	</bean>	
+	<bean id="userCreate" class="mainPackage.controller.UserCreate">
+		<property name="userDao" ref="userDao" />
+		<property name="operationLogDao" ref="operationLogDao" />
+		<property name="userLogic" ref="userLogic" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="userEntity" ref="userEntity" />
+		<property name="permission" ref="permission" />
+	</bean>		
+	<bean id="userUpdate" class="mainPackage.controller.UserUpdate">
+		<property name="userDao" ref="userDao" />
+		<property name="operationLogDao" ref="operationLogDao" />
+		<property name="userLogic" ref="userLogic" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="userEntity" ref="userEntity" />
+		<property name="permission" ref="permission" />
+	</bean>				
+	<bean id="guestOsController" class="mainPackage.controller.GuestOsController">
+		<property name="guestOsDao" ref="guestOsDao" />
+		<property name="guestOsLogic" ref="guestOsLogic" />
+		<property name="permission" ref="permission" />
+	</bean>
+	<bean id="guestOsGetInfo" class="mainPackage.controller.GuestOsGetInfo">
+		<property name="userDao" ref="userDao" />
+		<property name="guestOsLogic" ref="guestOsLogic" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="defaultRedirectStrategy" ref="defaultRedirectStrategy" />
+		<property name="permission" ref="permission" />
+		<property name="operationLogDao" ref="operationLogDao" />
+	</bean>
+	<bean id="guestOsStart" class="mainPackage.controller.GuestOsStart">
+		<property name="userDao" ref="userDao" />
+		<property name="operationLogDao" ref="operationLogDao" />
+		<property name="guestOsLogic" ref="guestOsLogic" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="permission" ref="permission" />
+	</bean>
+	<bean id="guestOsStop" class="mainPackage.controller.GuestOsStop">
+		<property name="userDao" ref="userDao" />
+		<property name="operationLogDao" ref="operationLogDao" />
+		<property name="guestOsLogic" ref="guestOsLogic" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="permission" ref="permission" />
+	</bean>
+		<bean id="guestOsUpdate" class="mainPackage.controller.GuestOsUpdate">
+		<property name="userDao" ref="userDao" />
+		<property name="guestOsDao" ref="guestOsDao" />
+		<property name="operationLogDao" ref="operationLogDao" />
+		<property name="guestOsLogic" ref="guestOsLogic" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="guestOsEntity" ref="guestOsEntity" />
+		<property name="userEntity" ref="userEntity" />
+		<property name="permission" ref="permission" />
+	</bean>			
+	<bean id="hostOsController" class="mainPackage.controller.HostOsController">
+		<property name="hostOsDao" ref="hostOsDao" />
+	</bean>	
+	<bean id="hostOsUpdate" class="mainPackage.controller.HostOsUpdate">
+		<property name="userDao" ref="userDao" />
+		<property name="operationLogDao" ref="operationLogDao" />
+		<property name="hostOsLogic" ref="hostOsLogic" />
+		<property name="operationLogLogic" ref="operationLogLogic" />
+		<property name="hostOsEntity" ref="hostOsEntity" />
+		<property name="permission" ref="permission" />
+	</bean>		
+	<bean id="informationController" class="mainPackage.controller.InformationController">
+		<property name="informationDao" ref="informationDao" />
+	</bean>		
+	<bean id="operationLogController" class="mainPackage.controller.OperationLogController">
+		<property name="userDao" ref="userDao" />
+		<property name="operationLogDao" ref="operationLogDao" />
+	</bean>	
+
+	<!-- その他クラスDI -->
+	<bean id="utility" class="mainPackage.Utility">
+	</bean>	
+	<bean id="defaultRedirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy">
+	</bean>
+	<bean id="permission" class="mainPackage.Permission">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	
+	<!-- ビジネスロジッククラスDI -->
+	<bean id="userLogic" class="mainPackage.businessLogic.UserLogic">
+		<property name="userDao" ref="userDao" />
+		<property name="userEntity" ref="userEntity" />
+	</bean>		
+	<bean id="guestOsLogic" class="mainPackage.businessLogic.GuestOsLogic">
+		<property name="utility" ref="utility" />
+		<property name="userDao" ref="userDao" />
+		<property name="guestOsDao" ref="guestOsDao" />
+		<property name="hostOsDao" ref="hostOsDao" />
+		<property name="userEntity" ref="userEntity" />
+		<property name="guestOsEntity" ref="guestOsEntity" />
+		<property name="hostOsEntity" ref="hostOsEntity" />
+		<property name="clientGuestListGet" ref="clientGuestListGet" />
+		<property name="clientGuestOperation" ref="clientGuestOperation" />
+	</bean>	
+	<bean id="hostOsLogic" class="mainPackage.businessLogic.HostOsLogic">
+		<property name="hostOsDao" ref="hostOsDao" />
+		<property name="hostOsEntity" ref="hostOsEntity" />
+	</bean>		
+	<bean id="operationLogLogic" class="mainPackage.businessLogic.OperationLogLogic">
+		<property name="userEntity" ref="userEntity" />
+		<property name="operationLogDao" ref="operationLogDao" />
+		<property name="operationLogEntity" ref="operationLogEntity" />
+		<property name="operationContentsEntity" ref="operationContentsEntity" />
+	</bean>	
+	
+	<!-- 通信関連クラスDI -->
+	<bean id="clientGuestListGet" class="apiInterface.ClientGuestListGet">
+	</bean>
+	<bean id="clientGuestOperation" class="apiInterface.ClientGuestOperation">
+	</bean>
+	<!-- 以下は調査、検証が必要 -->
+	<!-- <bean id="socketData" class="SocketData.SocketData">-->
+	<!-- </bean>-->
+	<!-- <bean id="guestListGetData" class="SocketData.GuestListGetData">-->
+	<!-- </bean>-->
+	<!-- <bean id="guestOperationData" class="SocketData.GuestOperationData">-->
+	<!-- </bean>-->			
+		
+	<!-- DAOクラスDI -->
+	<bean id="userDao" class="mainPackage.dao.UserDao">
+	</bean>	
+	<bean id="guestOsDao" class="mainPackage.dao.GuestOsDao">
+	</bean>
+	<bean id="hostOsDao" class="mainPackage.dao.HostOsDao">
+	</bean>	
+	<bean id="operationLogDao" class="mainPackage.dao.OperationLogDao">
+	</bean>	
+	<bean id="informationDao" class="mainPackage.dao.InformationDao">
+	</bean>
+	
+	<!-- エンティティクラスDI -->
+	<bean id="userEntity" class="mainPackage.entity.UserEntity">
+	</bean>
+	<bean id="guestOsEntity" class="mainPackage.entity.GuestOsEntity">
+	</bean>
+	<bean id="hostOsEntity" class="mainPackage.entity.HostOsEntity">
+	</bean>
+	<bean id="operationLogEntity" class="mainPackage.entity.OperationLogEntity">
+	</bean>
+	<bean id="operationContentsEntity" class="mainPackage.entity.OperationContentsEntity">
+	</bean>
+	<bean id="informationEntity" class="mainPackage.entity.InformationEntity">
+	</bean>
+
+<!-- DI関連end ========================================== -->
+
+</beans>

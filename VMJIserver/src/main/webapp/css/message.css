@@ -1,0 +1,24 @@
+.message-background{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+    -ms-transform: translate(-50%,-50%);
+  -webkit-transform : translate(-50%,-50%);
+  transform : translate(-50%,-50%);
+  background-color: #f7effc;
+  z-index: 999;
+  text-align: center;
+  border-radius: 4px;
+  width: 30%;
+  min-height: 10%;
+  border:double; 
+  display:none;
+}
+
+.message-text{
+	font-size: 150%;
+	text-align:center;
+	margin-top : 5px;
+	margin-bottom : 3px;
+	font-weight: bold;
+}

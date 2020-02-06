@@ -1,0 +1,87 @@
+.HeaderLogoLine{
+position:relative;
+left: 50;	
+}
+
+.ScreenName{
+	font-size: 2.5em;
+color: #71bbff;
+font-style: oblique;
+text-align:left;
+position: relative;
+font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','繝偵Λ繧ｮ繝手ｧ偵ざ繧ｷ繝�繧ｯ',YuGothic,'Yu Gothic','繝｡繧､繝ｪ繧ｪ', Meiryo,'�ｼｭ�ｼｳ �ｼｰ繧ｴ繧ｷ繝�繧ｯ','MS PGothic'
+}
+
+.LinkName{
+	font-size: 100%;
+	color: #71bbff;
+	font-style: italic;
+	text-align:right;
+}
+
+.HeaderBackend{
+	background-color:#222200;
+}
+
+.HeaderButtom{
+	background-color:#222200;
+	color: #FFF;
+  height:30px;
+  font-size: 80%;
+  font-style: italic;
+}
+
+.HeaderButtom:hover{
+	color: #bae2fe;
+}
+
+.Menu{
+  position: relative;
+  background: -webkit-repeating-linear-gradient(-45deg, #d2eaff, #d2eaff 4px,#cae6ff 3px, #cae6ff 8px);
+  background: repeating-linear-gradient(-45deg, #d2eaff, #d2eaff 4px,#cae6ff 3px, #cae6ff 8px);
+  border-radius: 7px;
+  margin-top:3px;
+  margin-bottom:8px;
+  width: 40%;
+  height : 20px;
+  font-weight: bold;
+  text-align:center;
+  font-size: 90%;
+  color: #000040;
+}
+
+.Menu:after {
+  position: absolute;
+  content: '';
+  top: 100%;
+  left: 20px;
+  border: 10px solid transparent;
+  border-top: 8px solid #cae6ff;
+  width: 0;
+  height: 0;
+}
+
+body {
+	background-color:#eeefff;
+}
+
+.LogAera{
+	border-radius:5px;
+	background-color:#00162b;
+	color: #000040;
+	text-align:center;
+	width: 100%;
+	border: solid 3px #000000;
+	padding-left: 10px;	
+}
+
+.InfoAera{
+	border-radius:5px;
+	background-color:#fbf7fb;
+	color: #000040;
+	text-align:center;
+	width: 100%;
+	border: solid 1px #000000;
+	padding-left: 10px;
+	text-align:left;
+}

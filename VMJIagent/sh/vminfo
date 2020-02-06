@@ -1,0 +1,17 @@
+#!/bin/bash
+vmlist=`virsh list --all | awk 'NR>=3' | awk '{print $2}'`
+
+for i in $vmlist; do 
+cutstring=','
+base=`virsh dominfo ${i} | grep -E '(名前:|UUID:|状態:|CPU:)' | awk '{print $2}'`
+sedbase=`echo $base | sed -e "s/ /,/g"`
+mem=`virsh dominfo ${i} | grep '最大メモリー:' | awk '{print $2}'`
+gbmem=$(($mem /1024 /1024))
+vmdisklist=`virsh domblklist ${i} | awk 'NR>=3' | awk '{print $1}'`
+(
+disk=0
+for j in $vmdisklist; do 
+tmp=`virsh domblkinfo ${i} ${j} | grep '容量:' | awk '{print $2}'`
+disk=$(($disk + $(($tmp / 1024 /1024 /1024)) ));done
+echo $sedbase$cutstring$gbmem$cutstring$disk
+);done
